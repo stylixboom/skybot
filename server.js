@@ -87,6 +87,8 @@ app.post('/hello', function (req, res) {
   // Get client IP address  
   var client_ip = req.connection.remoteAddress;
   
+  console.log("Connected from " + client_ip);
+
   // Success response
   res.statusCode = 200;
   ret.message = "Welcome bot: " + client_ip;
