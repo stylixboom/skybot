@@ -4,8 +4,6 @@
 	Created: 16 August 2016
 */
 
-var args = process.argv.slice(2);
-
 // Log timing functions
 function printLogTime() {
 
@@ -29,24 +27,6 @@ function printLogTime() {
 // --------------- Express API server initialize ---------------
 var express = require('express');
 var app = express();
-// Defining a port we want to listen to
-const LISTENING_ADDR = '0.0.0.0';
-var LISTENING_PORT = 10101;
-
-// --------------- Validator initialize ---------------
-var validator = require('validator');
-
-// --------------- Server Parameter ---------------
-// Explicit PORT
-if (args[0]) {
-  if (!isNaN(args[0])) {
-    LISTENING_PORT = parseInt(args[0]);
-  }
-  else {
-    console.log(printLogTime() + " " + "Error: Listening port incorrect");
-    process.exit();
-  }
-}
 
 // --------------- Hashmap initialize ---------------
 var HashMap = require('hashmap');
@@ -56,7 +36,7 @@ var uuid_map = new HashMap();
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var server = app.listen(LISTENING_PORT, LISTENING_ADDR, function () {
+var server = app.listen(process.env.PORT, process.env.ADDR, function () {
   console.log(printLogTime() + " " + 'Waiting for robots at %s:%s', server.address().address, server.address().port);
 });
 
