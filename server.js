@@ -36,7 +36,7 @@ var uuid_map = new HashMap();
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var server = app.listen(process.env.PORT, process.env.ADDR, function () {
+var server = app.listen(3000, '0.0.0.0', function () {
   console.log(printLogTime() + " " + 'Waiting for robots at %s:%s', server.address().address, server.address().port);
 });
 
@@ -61,7 +61,7 @@ var active_checker = setInterval(function () {
 }, 1000);
 
 // --------------- Registering client UUID ---------------
-app.post('/hello', function (req, res) {
+app.post('/', function (req, res) {
   var ret = {};
 
   // Get client IP address  
