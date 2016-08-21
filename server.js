@@ -43,7 +43,7 @@ if (args[0]) {
     LISTENING_PORT = parseInt(args[0]);
   }
   else {
-    console.log(getLogTime() + " " + "Error: Listening port incorrect");
+    console.log(printLogTime() + " " + "Error: Listening port incorrect");
     process.exit();
   }
 }
@@ -57,7 +57,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var server = app.listen(process.env.PORT || LISTENING_PORT, process.env.ADDR || LISTENING_ADDR, function () {
-  console.log(getLogTime() + " " + 'Waiting for robots at %s:%s', server.address().address, server.address().port);
+  console.log(printLogTime() + " " + 'Waiting for robots at %s:%s', server.address().address, server.address().port);
 });
 
 function check_active_by_heartbeat_timeout() {
