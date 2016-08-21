@@ -56,7 +56,7 @@ var uuid_map = new HashMap();
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var server = app.listen(process.env.PORT || LISTENING_PORT, process.env.ADDR || LISTENING_ADDR, function () {
+var server = app.listen(LISTENING_PORT, LISTENING_ADDR, function () {
   console.log(printLogTime() + " " + 'Waiting for robots at %s:%s', server.address().address, server.address().port);
 });
 
