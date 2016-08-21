@@ -48,6 +48,10 @@ if (args[0]) {
   }
 }
 
+// --------------- Hashmap initialize ---------------
+var HashMap = require('hashmap');
+var uuid_map = new HashMap();
+
 // Body parser
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -75,3 +79,17 @@ var active_checker = setInterval(function () {
   //check_active_by_ping();
   check_active_by_heartbeat_timeout();
 }, 1000);
+
+// --------------- Registering client UUID ---------------
+app.post('/hello', function (req, res) {
+  var ret = {};
+
+  // Get client IP address  
+  var client_ip = req.connection.remoteAddress;
+  
+  // Success response
+  res.statusCode = 200;
+  ret.message = "Welcome bot: " + client_ip;
+  ret.error = 0;
+  res.json(ret);
+});
