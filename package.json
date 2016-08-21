@@ -1,0 +1,11 @@
+{
+  "name": "bot_server",
+  "version": "1.0.0",
+  "description": "A server for transferring control commands for a robot remotely.",
+  "main": "server.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "author": "Siriwat Kasamwattanarote",
+  "license": "ISC"
+}
