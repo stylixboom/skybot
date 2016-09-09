@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    Time: <p id="time_txt"></p><br/>    
+    Message: <p id="message_txt"></p><br/>   
+    Latency: <p id="laten_txt"></p><br/>  
+
+    <script>
+        var start_time = new Date();
+        document.getElementById("time_txt").innerHTML = start_time;
+
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                var obj = JSON.parse(xmlHttp.responseText);
+
+                document.getElementById("message_txt").innerHTML = obj.message;
+                document.getElementById("laten_txt").innerHTML = new Date() - start_time;
+            }
+        }
+        xmlHttp.open("GET", '/latency', true); // true for asynchronous 
+        xmlHttp.send(null);
+    </script>
+
+</body>
+
+</html>
