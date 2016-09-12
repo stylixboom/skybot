@@ -1,0 +1,14 @@
+{
+  "name": "bot_module",
+  "version": "1.0.0",
+  "description": "A bot module for Raspberry Pi for connecting and receiving commands from the server.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Siriwat K.",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io-client": "^1.4.8"
+  }
+}
