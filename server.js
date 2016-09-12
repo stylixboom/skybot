@@ -28,50 +28,92 @@ function printLogTime() {
 var express = require('express');
 var app = express();
 
-// --------------- Hashmap initialize ---------------
-var HashMap = require('hashmap');
-var uuid_map = new HashMap();
-
 // Body parser
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var server = app.listen(3000, '0.0.0.0', function () {
+var listening_ip = '0.0.0.0';
+var listening_port = 80;
+
+var server = app.listen(process.env.SKYBOT_PORT || listening_port, process.env.SKYBOT_IP || listening_ip, function () {
   console.log(printLogTime() + " " + 'Waiting for robots at %s:%s', server.address().address, server.address().port);
 });
 
-function check_active_by_heartbeat_timeout() {
-  // Reset active list
-  active_node = "";
-  uuid_map.forEach(function (client, key) {
-    //console.log(client.last_online);
-    if (client.last_online &&
-      (new Date() - client.last_online) < 30000) {  // Check if client is online within 30 seconds
-      if (active_node != "")
-        active_node += ",";
-      active_node += client.ipaddr;
-      //console.log(active_node);
-    }
-  });
-}
+// --------------- Basic response ---------------
+app.use('/', express.static(__dirname + '/client_ui'));
 
-var active_checker = setInterval(function () {
-  //check_active_by_ping();
-  check_active_by_heartbeat_timeout();
-}, 1000);
-
-// --------------- Registering client UUID ---------------
-app.post('/', function (req, res) {
+// --------------- Latency test ---------------
+app.get('/latency', function (req, res) {
   var ret = {};
 
   // Get client IP address  
   var client_ip = req.connection.remoteAddress;
-  
-  console.log("Connected from " + client_ip);
+
+  console.log(printLogTime() + " Connected from " + client_ip);
 
   // Success response
   res.statusCode = 200;
   ret.message = "Welcome bot: " + client_ip;
   ret.error = 0;
   res.json(ret);
+});
+
+// --------------- Socket.io ---------------
+var bot_sockid;
+var web_sockid;
+
+var io = require('socket.io')(server);
+io.on('connection', function (socket) {
+  //var socketId = socket.id;
+  var clientIp = socket.request.socket._peername.address;
+  var clientPort = socket.request.socket._peername.port;
+  console.log('New connection from IP: ' + clientIp + " Port: " + clientPort);
+
+  socket.on('login', function (data) {
+    console.log("Client login as a: " + data.mode);
+    socket.emit('set ip', { ip: clientIp });
+
+    // Grap socket id to it's role
+    switch (data.mode) {
+      case 'bot':
+        bot_sockid = socket.id;
+        break;
+      case 'web':
+        web_sockid = socket.id;
+        break;
+      default:
+        console.log("Unknow role " + data.mode);
+        break;
+    }
+  });
+
+  socket.on('leave', function (agent_param) {
+    console.log("Disconnecting from " + agent_param.mode + " IP: " + agent_param.ip);
+  });
+
+  socket.on('send car cmd', function (car_cmd) {
+    io.to(bot_sockid).emit('car cmd', car_cmd);
+    console.log("transmitted car_cmd fw:" + car_cmd.fw + " bw:" + car_cmd.bw + " tl:" + car_cmd.tl + " tr:" + car_cmd.tr + " fp:" + car_cmd.fp + " bp:" + car_cmd.bp);
+  });
+});
+
+
+// --------------- Terminate cleanup ---------------
+function terminate_cleanup() {
+  console.log("Closing server");
+
+  if (io) {
+    io.close();
+    process.exit();
+  }
+}
+
+// CTRL-C
+process.on('SIGINT', function () {
+    terminate_cleanup();
+});
+
+// Kill
+process.on('SIGTERM', function () {
+    terminate_cleanup();
 });
