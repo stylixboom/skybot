@@ -11,13 +11,13 @@
 
 // Joypad threshold
 var max_motor_power = 250;
-var max_fwbw_border = 10;
+var max_fwbw_border = 20;
 var max_fwbw_power;
 var center_fwbw;
 var max_fw;
 var max_bw;
 var start_turn = 25;
-var max_tltr_border = 10;
+var max_tltr_border = 20;
 var max_tltr_power;
 var center_tltr;
 var start_tl;
