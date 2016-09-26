@@ -185,6 +185,7 @@ function clear_pin() {
 
 // Copy from conn.js
 var SERVER_ADDR = 'skybot.baimai.live';
+//var SERVER_ADDR = 'tppwan1.noip.me';
 var SERVER_PORT = 80;
 var agent_param = { mode: 'bot', ip: '' };
 
@@ -218,6 +219,17 @@ socket.on('car cmd', function (car_cmd) {
     puppet_ctl(car_cmd);
 });
 
+// ---- Listening to server heartbeat ----
+// If no heartbeat more than 2 secs, the bot better stop moving,
+// since this is quite dangerous to go out of control.
+var last_heartbeat = new Date();
+socket.on('heartbeat', function (car_cmd) {
+    console.log("Got server heartbeat");
+    curr_heartbeat = new Date();
+    if (curr_heartbeat - last_heartbeat > 2000) {
+        // Cannot connect to server, pause moving
+    }
+});
 
 // --------------- Terminate cleanup ---------------
 function terminate_cleanup() {
