@@ -199,7 +199,7 @@ if (window.addEventListener) {
         };
 
         init();
-        
+
         resizeCanvas();
 
     }, false);
@@ -207,6 +207,7 @@ if (window.addEventListener) {
 
     // ----------- Server configuration and parameters -----------
     var SERVER_ADDR = 'skybot.baimai.live';
+    //var SERVER_ADDR = 'tppwan1.noip.me';
     var SERVER_PORT = 80;
     var agent_param = { mode: 'web', ip: '' };
 
