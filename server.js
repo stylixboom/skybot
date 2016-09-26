@@ -19,9 +19,9 @@ function printLogTime() {
   sec = (sec < 10 ? "0" : "") + sec; // 0 padding
 
   var msec = curr_time.getMilliseconds();
-  msec = (msec < 100 ? "0" : "") + msec;
+  msec = (msec < 10 ? "00" : msec < 100 ? "0" : "") + msec;
 
-  return "[" + hour + ":" + min + ":" + sec + "." + msec + "]";
+  return "[ " + curr_time.getUTCFullYear() + "-" + (curr_time.getUTCMonth() + 1) + "-" + (curr_time.getUTCDate() + 1) + " " + hour + ":" + min + ":" + sec + "." + msec + " ]";
 }
 
 // --------------- Express API server initialize ---------------
@@ -36,7 +36,7 @@ var listening_ip = '0.0.0.0';
 var listening_port = 80;
 
 var server = app.listen(process.env.SKYBOT_PORT || listening_port, process.env.SKYBOT_IP || listening_ip, function () {
-  console.log(printLogTime() + " " + 'Waiting for robots at %s:%s', server.address().address, server.address().port);
+  console.log(printLogTime() + ' Waiting for robots at %s:%s', server.address().address, server.address().port);
 });
 
 // --------------- Basic response ---------------
@@ -61,16 +61,17 @@ app.get('/latency', function (req, res) {
 // --------------- Socket.io ---------------
 var bot_sockid;
 var web_sockid;
+var heartbeat_timer;
 
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {
   //var socketId = socket.id;
   var clientIp = socket.request.socket._peername.address;
   var clientPort = socket.request.socket._peername.port;
-  console.log('New connection from IP: ' + clientIp + " Port: " + clientPort);
+  console.log(printLogTime() + ' New connection from IP: ' + clientIp + " Port: " + clientPort);
 
   socket.on('login', function (data) {
-    console.log("Client login as a: " + data.mode);
+    console.log(printLogTime() + " Client login as a: " + data.mode);
     socket.emit('set ip', { ip: clientIp });
 
     // Grap socket id to it's role
@@ -82,25 +83,33 @@ io.on('connection', function (socket) {
         web_sockid = socket.id;
         break;
       default:
-        console.log("Unknow role " + data.mode);
+        console.log(printLogTime() + " Unknow role " + data.mode);
         break;
     }
   });
 
   socket.on('leave', function (agent_param) {
-    console.log("Disconnecting from " + agent_param.mode + " IP: " + agent_param.ip);
+    console.log(printLogTime() + " Disconnecting from " + agent_param.mode + " IP: " + agent_param.ip);
   });
 
   socket.on('send car cmd', function (car_cmd) {
     io.to(bot_sockid).emit('car cmd', car_cmd);
-    console.log("transmitted car_cmd fw:" + car_cmd.fw + " bw:" + car_cmd.bw + " tl:" + car_cmd.tl + " tr:" + car_cmd.tr + " fp:" + car_cmd.fp + " bp:" + car_cmd.bp);
+    console.log(printLogTime() + " transmitted car_cmd fw:" + car_cmd.fw + " bw:" + car_cmd.bw + " tl:" + car_cmd.tl + " tr:" + car_cmd.tr + " fp:" + car_cmd.fp + " bp:" + car_cmd.bp);
   });
+
+  // Broadcasting Heartbeat to bot
+  heartbeat_timer = setTimeout(function () {
+    socket.emit('heartbeat', { ip: clientIp });
+  }, 100);
 });
 
 
 // --------------- Terminate cleanup ---------------
 function terminate_cleanup() {
-  console.log("Closing server");
+  console.log(printLogTime() + " Closing server");
+
+  // Clear heartbeat
+  clearTimeout(heartbeat_timer);
 
   if (io) {
     io.close();
@@ -110,10 +119,10 @@ function terminate_cleanup() {
 
 // CTRL-C
 process.on('SIGINT', function () {
-    terminate_cleanup();
+  terminate_cleanup();
 });
 
 // Kill
 process.on('SIGTERM', function () {
-    terminate_cleanup();
+  terminate_cleanup();
 });
