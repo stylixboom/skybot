@@ -1,6 +1,7 @@
 var SERVER_ADDR = 'skybot.baimai.live';
+//var SERVER_ADDR = 'tppwan1.noip.me';
 var SERVER_PORT = 80;
-var agent_param = { mode: 'bot', ip: ''};
+var agent_param = { mode: 'bot', ip: '' };
 
 // ---- Create a new socket connection ----
 var socket = require('socket.io-client')("http://" + SERVER_ADDR + ":" + SERVER_PORT);
@@ -16,6 +17,9 @@ socket.on('connect', function () {
 socket.on('set ip', function (data) {
     agent_param.ip = data.ip;
     console.log("Connected through IP: " + agent_param.ip);
+
+    // Show online status
+    //online_status();
 });
 
 socket.on('disconnect', function () {
@@ -32,7 +36,10 @@ socket.on('car cmd', function (car_cmd) {
 
 // --------------- Terminate cleanup ---------------
 function terminate_cleanup() {
+    clear_pin();
+
     console.log("Disconnecting");
+
 
     if (socket) {
         socket.emit('leave', agent_param);
