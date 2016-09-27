@@ -57,6 +57,7 @@ $ node server.js
 > **Note:** Running server module as a service will be available in the next release. In this time, running `node server.js` under **tmux** or **screen** are recommended.
 
 **Client**
+
 Joystick control is accessible through a web browser, both PC and mobile. By locating to a server hostname or IP address, the joystick interface will be shown up.
 
 ----------
