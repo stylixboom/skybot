@@ -39,6 +39,7 @@ The architecture is designed to works with the internet available environment. T
 Usage
 --------
 **Bot**
+
 Installing a bot module as a service on Raspberry Pi, where you need *root* access.
 
 ```
@@ -47,6 +48,7 @@ $ ./install_service.sh
 ```
 
 **Server**
+
 Running a server skybot service with
 ```
 $ cd path_to_skybot_server
