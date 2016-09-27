@@ -1,6 +1,8 @@
 SKYBOT server: A server for controlling a Raspberry Pi based RC bot over the internet.
 ===================
 
+![Bot prototype v.1](https://raw.githubusercontent.com/stylixboom/skybot/master/bot_prototype.png)
+
 A prototyped experiment based on an **lr_motor** project (https://github.com/stylixboom/lr_motor) with the extended communication from a keypress event of SSH terminal, which give us one channel at a time, to a joystick control over the internet that give us a pure multi-channel control based on HTML5 and canvas, which works on both PC/mobile web browser.
 
 The key ability is to control each bot over the internet. By placing a bot server somewhere that the bot can have access to it. The client web-based interface will be served as an online joystick to control the connected bot. Once joystick is adjusted, the transformed RC commands will be send to the skybot_server as to enable/disable/PWM the GPIO pin on Raspberry Pi. Then, the server will forward the commands to the bot. The system has been tested perfectly with no delay on the route from Japan (client) to Singapore (server) and end at Thailand (bot).
