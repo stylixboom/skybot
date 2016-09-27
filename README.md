@@ -17,17 +17,17 @@ This project mainly aims to give me ability to walk around my house in Thailand 
 Requirements
 --------
 1. Raspberry Pi
-1.1. Node.js
-1.2. Motor driver (IC) - Usage ref: https://github.com/stylixboom/lr_motor
-1.3. pigpio - Installing ref: https://www.npmjs.com/package/pigpio
-2. RC car with front and rear motor to control steering and acceration.
+2. Node.js
+3. Motor driver (IC) - Usage ref: https://github.com/stylixboom/lr_motor
+4. pigpio - Installing ref: https://www.npmjs.com/package/pigpio
+5. RC car with front and rear motor to control steering and acceration.
 
 ----------
 
 Architecture
 -------
 
-![](https://raw.githubusercontent.com/stylixboom/skybot/master/skybot_architecture.png)
+![Skybot architecture](https://raw.githubusercontent.com/stylixboom/skybot/master/skybot_architecture.png)
 
 The architecture is designed to works with the internet available environment. The server side need to open a port as for accepting the connections from both client and the bot, where 80 is the default port of this skybot server. Making any change need to follow the modification through the following files
 - server.js
