@@ -38,6 +38,32 @@ The architecture is designed to works with the internet available environment. T
 
 ----------
 
+Wiring
+-------
+![Wiring diagram for RC toy with TB6612FNG](https://raw.githubusercontent.com/stylixboom/skybot/master/skybot_architecture.png)
+
+----------
+
+Pin configuration
+-------
+```
+|     Function    | TB6612FNG pin | GPIO pin |
+|:---------------:|:-------------:|:--------:|
+|    Rear wheel   |      PWMA     |    18    |
+|                 |      AIN2     |    23    |
+|                 |      AIN1     |    24    |
+|                 |      STBY     |    25    |
+|   Front wheel   |      BIN1     |    22    |
+|                 |      BIN2     |    27    |
+|                 |      PWMB     |    17    |
+| Shutdown switch |               |     5    |
+|  LED1 (yellow)  |               |     6    |
+|    LED2 (red)   |               |    13    |
+|      Buzzer     |               |    19    |
+```
+
+----------
+
 Usage
 --------
 **Bot**
