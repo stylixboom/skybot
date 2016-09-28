@@ -28,7 +28,7 @@ Optional
 --------
 6. Button 
 7. Buzzer
-8. LED
+8. Bi-colored LED
 
 ----------
 
@@ -40,7 +40,7 @@ Architecture
 The architecture is designed to works with the internet available environment. The server side need to open a port as for accepting the connections from both client and the bot, where 80 is the default port of this skybot server. Making any change need to follow the modification through the following files
 - server.js
 - bot_module/bot.js
-- client_ui/joystick_control.j
+- client_ui/joystick_control.js
 
 ----------
 
