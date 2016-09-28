@@ -1,7 +1,7 @@
 SKYBOT server: A server for controlling a Raspberry Pi based RC bot over the internet.
 ===================
 
-![Bot prototype v.1](https://raw.githubusercontent.com/stylixboom/skybot/master/bot_prototype.png)
+![Bot prototype v.1](https://raw.githubusercontent.com/stylixboom/skybot/master/bot_prototype.jpg)
 
 A prototyped experiment based on an **lr_motor** project (https://github.com/stylixboom/lr_motor) with the extended communication from a keypress event of SSH terminal, which give us one channel at a time, to a joystick control over the internet that give us a pure multi-channel control based on HTML5 and canvas, which works on both PC/mobile web browser.
 
@@ -24,6 +24,12 @@ Requirements
 4. pigpio - Installing ref: https://www.npmjs.com/package/pigpio
 5. RC car with front and rear motor to control steering and acceration.
 
+Optional
+--------
+6. Button 
+7. Buzzer
+8. LED
+
 ----------
 
 Architecture
@@ -40,7 +46,7 @@ The architecture is designed to works with the internet available environment. T
 
 Wiring
 -------
-![Wiring diagram for RC toy with TB6612FNG](https://raw.githubusercontent.com/stylixboom/skybot/master/skybot_architecture.png)
+![Wiring diagram for RC toy with TB6612FNG](https://raw.githubusercontent.com/stylixboom/skybot/master/wiring_diagram.png)
 
 ----------
 
@@ -57,7 +63,7 @@ Pin configuration
 |                 |      BIN2     |    27    |
 |                 |      PWMB     |    17    |
 | Shutdown switch |               |     5    |
-|  LED1 (yellow)  |               |     6    |
+|   LED1 (green)  |               |     6    |
 |    LED2 (red)   |               |    13    |
 |      Buzzer     |               |    19    |
 ```
