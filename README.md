@@ -13,7 +13,7 @@ This project mainly aims to give me ability to walk around my house in Thailand 
 
 ----------
 
-[![Skybot in action](https://raw.githubusercontent.com/stylixboom/skybot/master/skybot_in_action.jpg)](https://youtu.be/3CBIulryX4M "Skybot in action")
+[![Skybot in action](https://raw.githubusercontent.com/stylixboom/skybot/master/skybot_in_action.jpg)](https://youtu.be/KuwRwkkmNok "Skybot in action")
 
 
 Requirements
