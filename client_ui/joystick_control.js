@@ -206,13 +206,11 @@ if (window.addEventListener) {
 
 
     // ----------- Server configuration and parameters -----------
-    var SERVER_ADDR = 'skybot.baimai.live';
-    //var SERVER_ADDR = 'tppwan1.noip.me';
-    var SERVER_PORT = 80;
+    var SERVER_ADDR = location.host;
     var agent_param = { mode: 'web', ip: '' };
 
     // ---- Create a new socket connection ----
-    var socket = io.connect("http://" + SERVER_ADDR + ":" + SERVER_PORT);
+    var socket = io.connect("http://" + SERVER_ADDR);
 
     // ---- Socket events send from the server ----
     socket.on('connect', function () {
